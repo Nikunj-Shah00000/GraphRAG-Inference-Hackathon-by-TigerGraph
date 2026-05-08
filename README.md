@@ -76,6 +76,26 @@ backend/
 │
 └── .env
 
+frontend/
+│
+├── app/
+│   ├── page.jsx
+│   ├── globals.css
+│   └── layout.jsx
+│
+├── components/
+│   ├── Header.jsx
+│   ├── QueryBox.jsx
+│   ├── PipelineCard.jsx
+│   ├── MetricsPanel.jsx
+│   ├── GraphVisualization.jsx
+│   ├── TokenHeatmap.jsx
+│   ├── StrategyBadge.jsx
+│   ├── CostComparison.jsx
+│   └── LoadingSpinner.jsx
+│
+└── lib/
+    └── api.js
 # 🧠 Architecture
 
 ## System Design
