@@ -54,6 +54,27 @@ Result:
 * 🧠 Better reasoning accuracy
 
 ---
+Folder Structure
+backend/
+│
+├── app/
+│   ├── main.py
+│   ├── pipelines/
+│   │   ├── llm_only.py
+│   │   ├── basic_rag.py
+│   │   └── graphrag.py
+│   │
+│   ├── evaluation/
+│   │   └── evaluator.py
+│   │
+│   ├── utils/
+│   │   ├── metrics.py
+│   │   └── embeddings.py
+│   │
+│   └── data/
+│       └── dataset.txt
+│
+└── .env
 
 # 🧠 Architecture
 
