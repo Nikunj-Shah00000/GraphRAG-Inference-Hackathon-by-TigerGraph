@@ -1,0 +1,6 @@
+Install Dependencies
+
+
+
+npm install axios recharts framer-motion react-force-graph lucide-react
+
