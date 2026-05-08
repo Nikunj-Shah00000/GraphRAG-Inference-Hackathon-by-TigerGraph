@@ -1,0 +1,520 @@
+This is a very strong hackathon theme because it targets a real production bottleneck: **LLM inference cost and context inefficiency**. The challenge is essentially asking you to prove:
+
+> **GraphRAG can reduce tokens and cost while maintaining or improving answer quality compared to Basic RAG.**
+
+The uploaded hackathon guide lays out the full benchmark structure, evaluation metrics, and judging criteria. 
+
+Here’s how you can approach building a winning system.
+
+---
+
+# Core Architecture
+
+You need **3 pipelines** running on the **same dataset** and answering the **same queries**.
+
+## Pipeline 1 — LLM Only
+
+### Flow
+
+User Query → Prompt → LLM → Answer
+
+### Purpose
+
+This is the baseline worst-case system.
+
+### Problems
+
+* Massive token usage
+* Hallucinations
+* No grounding
+* Slow on long contexts
+
+### Suggested Stack
+
+* OpenAI GPT-4o-mini
+* Google Gemini 1.5 Flash
+* Anthropic Claude Haiku
+
+Use a cheap fast model because this pipeline is mainly for benchmarking.
+
+---
+
+# Pipeline 2 — Basic RAG
+
+## Flow
+
+User Query
+→ Embedding Model
+→ Vector DB Similarity Search
+→ Top-k Chunks
+→ LLM
+→ Answer
+
+### Purpose
+
+Industry-standard retrieval pipeline.
+
+### Suggested Stack
+
+### Embeddings
+
+* BAAI/bge-small-en
+* all-MiniLM-L6-v2
+
+### Vector DB
+
+* Chroma ChromaDB
+* Pinecone Pinecone
+* Weaviate Weaviate
+
+### Framework
+
+* LangChain LangChain
+* LlamaIndex LlamaIndex
+
+### Optimization Ideas
+
+* Dynamic chunk size
+* Hybrid BM25 + vector retrieval
+* Query rewriting
+* Metadata filtering
+
+---
+
+# Pipeline 3 — GraphRAG
+
+This is the star of the hackathon.
+
+## Flow
+
+Documents
+→ Entity Extraction
+→ Relationship Graph
+→ Multi-hop Traversal
+→ Relevant Subgraph
+→ Structured Context
+→ LLM
+→ Answer
+
+The hackathon specifically expects usage of the TigerGraph GraphRAG repo. 
+
+## Why GraphRAG Wins
+
+Instead of retrieving:
+
+> “similar chunks”
+
+it retrieves:
+
+> “connected reasoning paths”
+
+That means:
+
+* fewer irrelevant tokens
+* more targeted context
+* better multi-document reasoning
+* lower prompt size
+
+---
+
+# Recommended Winning Strategy
+
+## Choose a Dataset Where Relationships Matter
+
+This is critical.
+
+Good GraphRAG datasets contain:
+
+* entities
+* references
+* cross-document links
+* temporal relationships
+* organizations/people/events
+
+## Best Dataset Ideas
+
+### Research Papers
+
+Best overall choice.
+
+Why?
+
+* citations
+* authors
+* topics
+* methods
+* datasets
+* institutions
+
+Graph relationships become extremely powerful.
+
+---
+
+### Legal Documents
+
+* cases reference other cases
+* statutes linked to rulings
+* judges + firms + precedents
+
+Excellent for multi-hop reasoning.
+
+---
+
+### Healthcare / Medical
+
+* diseases
+* symptoms
+* drugs
+* clinical trials
+* proteins
+
+Very graph-friendly.
+
+---
+
+### Startup / Company Intelligence
+
+* founders
+* funding rounds
+* investors
+* acquisitions
+* partnerships
+
+Easy to visualize in dashboards.
+
+---
+
+# What Judges Actually Want
+
+The guide explicitly says the headline metric is:
+
+## Token Reduction with Maintained Accuracy
+
+Judging weights from the guide: 
+
+| Metric                     | Weight |
+| -------------------------- | ------ |
+| Token Reduction            | 30%    |
+| Accuracy                   | 30%    |
+| Performance                | 20%    |
+| Engineering + Storytelling | 20%    |
+
+So your project should optimize:
+
+## 1. Token Efficiency
+
+Reduce:
+
+* prompt tokens
+* completion tokens
+* retrieved context size
+
+## 2. Accuracy
+
+Must maintain or exceed Basic RAG.
+
+## 3. Dashboard Quality
+
+This matters more than people think.
+
+---
+
+# Architecture That Can Win
+
+## Frontend
+
+### Recommended
+
+* Next.js
+* React
+* Tailwind
+
+### Dashboard Layout
+
+| Query    | LLM Only | Basic RAG | GraphRAG |
+| -------- | -------- | --------- | -------- |
+| Answer   | ✔        | ✔         | ✔        |
+| Tokens   | ✔        | ✔         | ✔        |
+| Latency  | ✔        | ✔         | ✔        |
+| Cost     | ✔        | ✔         | ✔        |
+| Accuracy | ✔        | ✔         | ✔        |
+
+Add:
+
+* live graphs
+* token savings %
+* cost savings %
+* retrieval visualization
+
+---
+
+# Killer Feature Ideas
+
+These can differentiate your project.
+
+---
+
+## 1. Graph Visualization
+
+Huge demo advantage.
+
+Show:
+
+* entities
+* edges
+* traversal path
+* reasoning chain
+
+Use:
+
+* Cytoscape.js
+* D3.js
+* Sigma.js
+
+---
+
+## 2. Retrieval Explainability
+
+Display:
+
+> “Why this answer was selected”
+
+Example:
+
+* Person A → Company B → Acquisition C
+
+instead of dumping chunks.
+
+Judges love explainability.
+
+---
+
+## 3. Adaptive Retrieval
+
+Dynamically decide:
+
+* vector search only
+* graph traversal
+* hybrid retrieval
+
+based on query complexity.
+
+This is advanced and impressive.
+
+---
+
+## 4. Token Heatmap
+
+Visualize:
+
+* token consumption
+* wasted tokens
+* graph savings
+
+This makes your benchmark memorable.
+
+---
+
+# Important Optimization Tricks
+
+## For Basic RAG
+
+Keep it reasonably optimized.
+
+If Basic RAG is intentionally bad:
+
+* judges notice
+* comparison becomes unfair
+
+You want:
+
+> a strong Basic RAG baseline
+
+because beating a strong baseline is impressive.
+
+---
+
+# For GraphRAG
+
+## Important Parameters
+
+The guide specifically mentions tuning: 
+
+* chunk size
+* hop depth
+* retriever type
+* community level
+* prompt templates
+
+### Most Important
+
+`num_hops`
+
+Too low:
+
+* misses reasoning chains
+
+Too high:
+
+* token explosion
+
+Usually:
+
+* 2-hop works best
+* 3-hop for complex reasoning
+
+---
+
+# Accuracy Evaluation
+
+The hackathon requires BOTH:
+
+## 1. LLM-as-a-Judge
+
+PASS / FAIL grading
+
+## 2. BERTScore
+
+Semantic similarity metric
+
+The guide even provides example evaluation code. 
+
+---
+
+# Recommended Tech Stack
+
+## Backend
+
+* FastAPI
+* Python
+
+## RAG
+
+* LangChain
+* LlamaIndex
+
+## Graph
+
+* TigerGraph TigerGraph
+
+## Vector
+
+* ChromaDB
+
+## Evaluation
+
+* Hugging Face evaluate
+* BERTScore
+
+## Frontend
+
+* Next.js
+* Tailwind
+* Recharts
+
+---
+
+# Smart Project Positioning
+
+Most teams will build:
+
+> “3 pipelines and a dashboard”
+
+You should position yours as:
+
+# “Inference Optimization Platform”
+
+Focus on:
+
+* production AI economics
+* scalable retrieval
+* enterprise token reduction
+
+That sounds much stronger in demos and resumes.
+
+---
+
+# Suggested Project Names
+
+* GraphPulse
+* TokenGraph
+* InferGraph
+* GraphLens AI
+* TokenWise
+* RAGBench
+* GraphReduce
+* ContextFlow
+* NeuroGraphRAG
+* HyperGraph AI
+
+---
+
+# What Will Impress Judges Most
+
+## Highest Impact Combination
+
+### 1. Strong visual dashboard
+
+### 2. Clear token savings
+
+### 3. Maintained accuracy
+
+### 4. Graph traversal visualization
+
+### 5. Good storytelling
+
+The hackathon repeatedly emphasizes:
+
+> “Let the numbers tell the story.” 
+
+So your UI should make the improvement visually obvious within 5 seconds.
+
+---
+
+# Recommended Strategy for Fast Execution
+
+## Best Practical Path
+
+### Use:
+
+* TigerGraph GraphRAG repo mostly as-is
+* Focus energy on:
+
+  * dashboard
+  * evaluation
+  * benchmarking
+  * visualization
+  * optimization
+
+This gives:
+
+* fastest development
+* strongest demo
+* lower debugging risk
+
+---
+
+# Final Recommendation
+
+The strongest submission would likely look like:
+
+## Dataset
+
+Research papers or legal corpus
+
+## Key Differentiator
+
+Interactive graph reasoning visualization
+
+## Headline Metrics
+
+* 50–70% token reduction
+* equal or better accuracy
+* lower latency
+* explainable retrieval paths
+
+## Story
+
+> “Graphs reduce unnecessary context and improve inference efficiency at scale.”
+
+That directly aligns with the hackathon’s central thesis. 
