@@ -1,0 +1,75 @@
+# Running the Backend
+
+uvicorn app.main:app --reload
+
+
+
+# open
+
+http://127.0.0.1:8000/docs
+
+
+
+# Example API Request
+
+{
+
+  "query": "How does transformer efficiency improve inference?"
+
+}
+
+
+
+# Example Response
+
+{
+
+  "query": "How does transformer efficiency improve inference?",
+
+  "results": [
+
+    {
+
+      "pipeline": "LLM Only",
+
+      "tokens": 3500,
+
+      "latency": 4.1,
+
+      "cost": 0.003,
+
+      "answer": "..."
+
+    },
+
+    {
+
+      "pipeline": "Basic RAG",
+
+      "tokens": 1800,
+
+      "latency": 2.8,
+
+      "cost": 0.001,
+
+      "answer": "..."
+
+    },
+
+    {
+
+      "pipeline": "GraphRAG",
+
+      "tokens": 720,
+
+      "latency": 1.5,
+
+      "cost": 0.0004,
+
+      "answer": "..."
+
+    }
+
+  ]
+
+}
